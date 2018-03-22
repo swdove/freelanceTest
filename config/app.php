@@ -155,11 +155,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        FreelanceTest\Providers\AppServiceProvider::class,
+        FreelanceTest\Providers\AuthServiceProvider::class,
+        // FreelanceTest\Providers\BroadcastServiceProvider::class,
+        FreelanceTest\Providers\EventServiceProvider::class,
+        FreelanceTest\Providers\RouteServiceProvider::class,
 
     ],
 

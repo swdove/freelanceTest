@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace FreelanceTest\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Message;
+use FreelanceTest\Message;
 
 class MessagesController extends Controller
 {

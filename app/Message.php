@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace FreelanceTest;
 
 use Illuminate\Database\Eloquent\Model;
 
