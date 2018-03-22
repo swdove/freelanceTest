@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => FreelanceTest\User::class,
+            'model' => FreelanceTest\Models\User::class,
         ],
 
         // 'users' => [
