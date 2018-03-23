@@ -18,6 +18,9 @@
         <li class="nav-item {{Request::is('messages') ? 'active' : ''}}">
           <a class="nav-link " href="/messages">Messages</a>
         </li>
+        <li class="nav-item {{Request::is('welcome') ? 'active' : ''}}">
+          <a class="nav-link " href="/welcome">Welcome</a>
+        </li>        
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
           <div class="dropdown-menu" aria-labelledby="dropdown01">

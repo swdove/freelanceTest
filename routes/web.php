@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use FreelanceTest\Models\Task;
 
 Route::get('/', 'PagesController@getHome');
 
@@ -17,19 +18,10 @@ Route::get('/about', 'PagesController@getAbout');
 
 Route::get('/contact', 'PagesController@getContact');
 
+Route::get('/tasks', 'TasksController@index');
+Route::get('/tasks/{task}', 'TasksController@show');
+
 Route::get('/messages', 'MessagesController@getMessages');
 
 Route::post('/contact/submit', 'MessagesController@submit');
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
-    Route::resource('customers', 'CustomersController');
-    Route::resource('brands', 'BrandsController');
-    Route::resource('product-categories', 'ProductCategoriesController');
-    Route::resource('products', 'ProductsController');
-    Route::resource('users', 'UsersController');
-
-    Route::get('orders', [
-        'uses' => 'OrdersController@index',
-        'as' => 'orders.index',
-    ]);
-});
