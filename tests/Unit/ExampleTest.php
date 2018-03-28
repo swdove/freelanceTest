@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use FreelanceTest\Post;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -14,6 +15,13 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $this->assertTrue(true);
+        //$this->assertTrue(true);
+        //given
+        //when
+
+        Post::archives();
+        //then
+
+
     }
 }

@@ -13,8 +13,11 @@ class AppServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
+    {        
         Schema::defaultStringLength(191);
+        view()->composer('layouts.sidebar', function ($view) {
+            $view->with('archives', \FreelanceTest\Models\Post::archives());
+        });
     }
 
     /**

@@ -5,17 +5,27 @@ namespace FreelanceTest\Http\Controllers;
 use Illuminate\Http\Request;
 
 use FreelanceTest\Models\Post;
+use Carbon\Carbon;
 
 class PostsController extends Controller
 {
 
     public function __construct()
     {
+        //checks that user is logged in on "create" and other non-public pages.
         $this->middleware('auth')->except(['index', 'show']);
     }
     public function index() 
     {
-        $posts = Post::latest()->get();
+        //helper function to grab records in descending created order
+        $posts = Post::latest();
+        //if call includes a date filter request (archives), filter by month and year
+        if (request(['month', 'year'])) {
+            $posts->filter(request(['month', 'year']));
+        }
+        
+        $posts = $posts->get();
+        
         return view('posts.index', compact('posts'));
     }
 
@@ -37,7 +47,6 @@ class PostsController extends Controller
             'body' => 'required'
         ]);
         //create new post
-
         auth()->user()->publish(
             new Post(request(['title', 'body']))
         );
