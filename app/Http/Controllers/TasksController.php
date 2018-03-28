@@ -3,7 +3,7 @@
 namespace FreelanceTest\Http\Controllers;
 
 use Illuminate\Http\Request;
-use FreelanceTest\Models\Task;
+use FreelanceTest\Task;
 class TasksController extends Controller
 {
     public function index () {

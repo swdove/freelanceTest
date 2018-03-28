@@ -2,7 +2,7 @@
 
 namespace FreelanceTest\Http\Controllers\Auth;
 
-use FreelanceTest\Models\User;
+use FreelanceTest\User;
 use FreelanceTest\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;

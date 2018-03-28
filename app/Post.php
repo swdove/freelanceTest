@@ -1,6 +1,6 @@
 <?php
 
-namespace FreelanceTest\Models;
+namespace FreelanceTest;
 
 use Carbon\Carbon;
 

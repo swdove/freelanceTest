@@ -2,7 +2,7 @@
 
 namespace FreelanceTest\Repositories;
 
-use FreelanceTest\Models\Post;
+use FreelanceTest\Post;
 
 class Posts
 {

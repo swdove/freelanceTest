@@ -3,8 +3,8 @@
 namespace FreelanceTest\Http\Controllers;
 
 use Illuminate\Http\Request;
-use FreelanceTest\Models\Post;
-use FreelanceTest\Models\Comment;
+use FreelanceTest\Post;
+use FreelanceTest\Comment;
 
 class CommentsController extends Controller
 {

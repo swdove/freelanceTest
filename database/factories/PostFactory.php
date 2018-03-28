@@ -1,7 +1,6 @@
 <?php
 
 use Faker\Generator as Faker;
-use FreelanceTest\Models;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +13,11 @@ use FreelanceTest\Models;
 |
 */
 
-$factory->define(Post::class, function (Faker $faker) {
+$factory->define(FreelanceTest\Post::class, function (Faker $faker) {
     return [
-        'user_id' => 1,
+        'user_id' => function () {
+            return factory(FreelanceTest\User::class)->create()->id;
+        },
         'title' => $faker->sentence,
         'body' => $faker->paragraph
     ];

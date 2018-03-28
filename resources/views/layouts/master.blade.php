@@ -16,6 +16,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/css/app.css" rel="stylesheet">
+    <script src="{{ asset('js/app.js') }}" defer></script>
   </head>
 
   <body>

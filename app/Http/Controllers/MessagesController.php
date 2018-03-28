@@ -3,7 +3,7 @@
 namespace FreelanceTest\Http\Controllers;
 
 use Illuminate\Http\Request;
-use FreelanceTest\Models\Message;
+use FreelanceTest\Message;
 
 class MessagesController extends Controller
 {

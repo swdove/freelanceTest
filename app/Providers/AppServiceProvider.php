@@ -4,6 +4,7 @@ namespace FreelanceTest\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use FreelanceTest\Billing\Stripe;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {        
         Schema::defaultStringLength(191);
         view()->composer('layouts.sidebar', function ($view) {
-            $view->with('archives', \FreelanceTest\Models\Post::archives());
+            $view->with('archives', \FreelanceTest\Post::archives());
         });
     }
 
@@ -27,6 +28,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(Stripe::class, function() {
+            return new Stripe(config('services.stripe.secret'));
+        });
+
     }
 }

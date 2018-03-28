@@ -4,7 +4,7 @@ namespace FreelanceTest\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use FreelanceTest\Models\Post;
+use FreelanceTest\Post;
 use Carbon\Carbon;
 
 class PostsController extends Controller

@@ -1,9 +1,8 @@
 <?php
 
 namespace FreelanceTest\Http\Controllers;
-use FreelanceTest\Models\User;
-
 use Illuminate\Http\Request;
+use FreelanceTest\Http\Requests\RegistrationRequest;
 
 class RegistrationController extends Controller
 {
@@ -12,25 +11,9 @@ class RegistrationController extends Controller
         return view('registration.create');
     }
 
-    public function store()
+    public function store(RegistrationRequest $request)
     {
-        //validate
-        $this->validate(request(), [
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|confirmed'         
-        ]);
-
-        //create and save user
-        $user = User::create([ 
-            'name' => request('name'),
-            'email' => request('email'),
-            'password' => bcrypt(request('password'))
-        ]);
-        
-        //sign user in
-        auth()->login($user);
-
+        $request->persist();
         //redirect to home
         return redirect('/');
     }

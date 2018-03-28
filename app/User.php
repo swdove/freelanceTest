@@ -1,6 +1,6 @@
 <?php
 
-namespace FreelanceTest\Models;
+namespace FreelanceTest;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;

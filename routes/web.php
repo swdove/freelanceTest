@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use FreelanceTest\Models\Task;
 
 Route::get('/', 'PagesController@getHome');
 
