@@ -21,4 +21,12 @@ class PagesController extends Controller
     public function getWelcome(){
         return view('welcome');
     }
+
+    public function getPosts(){
+        return view('posts/index');
+    }
+
+    public function getBlog(){
+        return view('blog/index');
+    }
 }
