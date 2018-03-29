@@ -3,7 +3,7 @@
 namespace FreelanceTest\Http\Controllers;
 
 use Illuminate\Http\Request;
-use FreelanceTest\Models\Message;
+use FreelanceTest\Message;
 
 class MessagesController extends Controller
 {
@@ -26,9 +26,9 @@ class MessagesController extends Controller
         return redirect('/')->with('success', 'Message Sent');
     }
 
-    public function getMessages() {
+    public function index() {
         $messages = Message::all();
 
-        return view('messages')->with('messages', $messages);
+        return view('messages.index')->with('messages', $messages);
     }
 }

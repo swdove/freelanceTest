@@ -11,25 +11,37 @@
 |
 */
 
-Route::get('/', 'PagesController@getHome');
+Route::get('/', 'PostsController@index')->name('home');
+
+Route::get('/posts', 'PostsController@index');
+Route::get('/posts/create', 'PostsController@create');
+Route::get('/posts/{post}', 'PostsController@show');
+Route::post('/posts', 'PostsController@store');
+Route::post('/posts/{post}/comments', 'CommentsController@store');
+
+Route::get('/posts/tags/{tag}', 'TagsController@index');
+
+Route::get('/blog', 'PagesController@getBlog');
 
 Route::get('/about', 'PagesController@getAbout');
 
 Route::get('/contact', 'PagesController@getContact');
 
-Route::get('/messages', 'MessagesController@getMessages');
+Route::get('/tasks', 'TasksController@index');
+Route::get('/tasks/{task}', 'TasksController@show');
+
+Route::get('/messages', 'MessagesController@index');
 
 Route::post('/contact/submit', 'MessagesController@submit');
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
-    Route::resource('customers', 'CustomersController');
-    Route::resource('brands', 'BrandsController');
-    Route::resource('product-categories', 'ProductCategoriesController');
-    Route::resource('products', 'ProductsController');
-    Route::resource('users', 'UsersController');
 
-    Route::get('orders', [
-        'uses' => 'OrdersController@index',
-        'as' => 'orders.index',
-    ]);
-});
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+Route::get('/register', 'RegistrationController@create');
+Route::post('/register', 'RegistrationController@store');
+
+Route::get('/login', 'SessionsController@create')->name('login');
+Route::post('/login', 'SessionsController@store');
+Route::get('/logout', 'SessionsController@destroy');
+

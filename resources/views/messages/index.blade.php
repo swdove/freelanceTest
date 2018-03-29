@@ -1,6 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
+<div class="col-sm-8">
     <h1>Messages</h1>
     @if(count($messages) > 0)
         @foreach($messages as $message)
@@ -11,6 +12,7 @@
             </ul>
         @endforeach
     @endif
+</div>
 @endsection
 
 @section('sidebar')

@@ -1,11 +1,22 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
 @section('content')
-<h1>Home</h1>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi perferendis, maxime quas cumque ipsam accusantium voluptas unde rem doloribus explicabo iste quo! Mollitia, asperiores quaerat excepturi dolore incidunt corrupti quia.</p>
-@endsection
+<div class="col-sm-8 blog-main">
+    <div class="card">
+        <div class="card-header">Dashboard</div>
+            <div class="card-body">
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
 
-@section('sidebar')
-    @parent
-    <p>This is appended to the sidebar.</p>
+                @if (Auth::check())
+                You are logged in!
+                @else
+                You are not logged in.
+                @endif
+            </div>
+    </div>
+</div>
 @endsection

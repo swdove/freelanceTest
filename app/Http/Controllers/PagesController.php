@@ -17,4 +17,16 @@ class PagesController extends Controller
     public function getContact(){
         return view('contact');
     }
+
+    public function getWelcome(){
+        return view('welcome');
+    }
+
+    public function getPosts(){
+        return view('posts/index');
+    }
+
+    public function getBlog(){
+        return view('blog/index');
+    }
 }
