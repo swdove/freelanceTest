@@ -18,7 +18,7 @@ class PostsController extends Controller
     }
     public function index(Tag $tag = null) 
     {
-        return $tag->posts;
+       // return $tag->posts;
 
         //helper function to grab records in descending created order
         $posts = Post::latest();

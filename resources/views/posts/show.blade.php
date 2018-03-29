@@ -20,7 +20,7 @@
                     <strong>
                         {{ $comment->created_at->diffForHumans() }}:
                     </strong>
-                    {{ $comment->body }}
+                    {{ $comment->body }} - <i>{{ $comment->user->name }}</i>
                 </li>
                 @endforeach
             </ul>
