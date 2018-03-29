@@ -13,7 +13,11 @@ class RegistrationController extends Controller
 
     public function store(RegistrationRequest $request)
     {
+        //call registration functions in request provider
         $request->persist();
+
+        session()->flash('message', 'Thanks for signing up!');
+        
         //redirect to home
         return redirect('/');
     }

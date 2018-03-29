@@ -17,7 +17,9 @@ class AppServiceProvider extends ServiceProvider
     {        
         Schema::defaultStringLength(191);
         view()->composer('layouts.sidebar', function ($view) {
-            $view->with('archives', \FreelanceTest\Post::archives());
+            $archives = \FreelanceTest\Post::archives();
+            $tags = \FreelanceTest\Tag::has('posts')->pluck('name');
+            $view->with(compact('archives', 'tags'));
         });
     }
 

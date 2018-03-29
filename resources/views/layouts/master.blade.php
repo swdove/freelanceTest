@@ -23,6 +23,12 @@
 
     @include('inc.navbar')
 
+    @if ($flash = session('message'))
+    <div class="alert alert-success" role="alert">
+      {{ $flash }}
+    </div>
+    @endif
+
     <div class="blog-header">
       <div class="container">
         <h1 class="blog-title">SHIT</h1>

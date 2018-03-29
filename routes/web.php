@@ -11,13 +11,15 @@
 |
 */
 
-Route::get('/', 'PagesController@getHome');
+Route::get('/', 'PostsController@index')->name('home');
 
 Route::get('/posts', 'PostsController@index');
 Route::get('/posts/create', 'PostsController@create');
 Route::get('/posts/{post}', 'PostsController@show');
 Route::post('/posts', 'PostsController@store');
 Route::post('/posts/{post}/comments', 'CommentsController@store');
+
+Route::get('/posts/tags/{tag}', 'TagsController@index');
 
 Route::get('/blog', 'PagesController@getBlog');
 
@@ -35,7 +37,7 @@ Route::post('/contact/submit', 'MessagesController@submit');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index');
 Route::get('/register', 'RegistrationController@create');
 Route::post('/register', 'RegistrationController@store');
 
