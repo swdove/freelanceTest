@@ -13884,8 +13884,44 @@ window.Vue = __webpack_require__(36);
 
 Vue.component('example-component', __webpack_require__(39));
 
-var app = new Vue({
-  el: '#app'
+// const app = new Vue({
+//     el: '#app'
+// });
+
+Vue.component('task', __webpack_require__(48));
+
+Vue.component('task-list', {
+    template: '<div><ul><task v-for="task in tasks">{{ task.description }}</task></ul></div>',
+    data: function data() {
+        return {
+            tasks: [{ description: 'Go to the store', completed: true }, { description: 'Finish screencast', completed: true }, { description: 'Make donation', completed: false }, { description: 'Clear inbox', completed: true }, { description: 'Make dinner', completed: false }]
+        };
+    }
+});
+
+Vue.component('message', {
+    props: ['title', 'body'],
+    data: function data() {
+        return {
+            isVisible: true
+        };
+    },
+
+    template: '\n    <article class="message" v-show="isVisible">\n    <div class="message-header">\n        {{title}}\n        <button class="delete" @click="isVisible = false"></button>\n    </div>\n    <div class="message-body">\n        {{body}}\n    </div>\n    </article>   \n    '
+});
+
+Vue.component('my-modal', {
+    data: function data() {
+        return {
+            showModal: true
+        };
+    },
+
+    template: '\n    <div class="modal is-active">\n    <div class="modal-background"></div>\n    <div class="box">\n        <div class="modal-content">\n            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam fringilla congue elit id pulvinar. Proin nec dolor turpis. Morbi vitae cursus ex. Suspendisse efficitur hendrerit erat, eget ultricies purus condimentum ultricies. Nunc efficitur pharetra sollicitudin. Vivamus porttitor vehicula magna, in elementum neque imperdiet vitae. Aliquam suscipit odio velit, vitae vestibulum mauris accumsan at. Fusce sed egestas tellus. Sed aliquam lectus sit amet malesuada dignissim.</p>\n        </div>\n    </div>\n    <button class="modal-close is-large" aria-label="close"></button>\n    </div>\n    '
+});
+
+new Vue({
+    el: '#root'
 });
 
 /***/ }),
@@ -47329,6 +47365,77 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(40)
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__(49)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/TaskComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1a2e6851", Component.options)
+  } else {
+    hotAPI.reload("data-v-1a2e6851", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("li", [_vm._t("default")], 2)
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1a2e6851", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

@@ -25,15 +25,14 @@ Route::get('/blog', 'PagesController@getBlog');
 
 Route::get('/about', 'PagesController@getAbout');
 
+Route::get('/vue', 'PagesController@getVue');
+
 Route::get('/contact', 'PagesController@getContact');
+Route::post('/contact/submit', 'MessagesController@submit');
+Route::get('/messages', 'MessagesController@index');
 
 Route::get('/tasks', 'TasksController@index');
 Route::get('/tasks/{task}', 'TasksController@show');
-
-Route::get('/messages', 'MessagesController@index');
-
-Route::post('/contact/submit', 'MessagesController@submit');
-
 
 Auth::routes();
 

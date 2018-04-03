@@ -29,4 +29,8 @@ class PagesController extends Controller
     public function getBlog(){
         return view('blog/index');
     }
+
+    public function getVue(){
+        return view('vue/index');
+    }    
 }
