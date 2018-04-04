@@ -19,7 +19,7 @@
           <a class="nav-link " href="/messages">Messages</a>
         </li>
         <li class="nav-item {{Request::is('vue') ? 'active' : ''}}">
-          <a class="nav-link " href="/articles">Vue</a>
+          <a class="nav-link " href="/articles">Articles</a>
         </li>        
         <li class="nav-item dropdown {{Request::is('posts', 'posts/*') ? 'active' : ''}}">
           <a class="nav-link dropdown-toggle" href="" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Posts</a>
@@ -29,6 +29,9 @@
             <a class="dropdown-item" href="#">Something else here</a>
           </div>
         </li>
+        <li class="nav-item {{Request::is('forum') ? 'active' : ''}}">
+          <a class="nav-link " href="/forum">Forum</a>
+        </li>               
       </ul>
       <!-- Right Side Of Navbar -->
       <ul class="navbar-nav ml-auto">
