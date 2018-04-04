@@ -25,7 +25,7 @@ Route::get('/blog', 'PagesController@getBlog');
 
 Route::get('/about', 'PagesController@getAbout');
 
-Route::get('/vue', 'PagesController@getVue');
+Route::get('/articles', 'PagesController@getArticles');
 
 Route::get('/contact', 'PagesController@getContact');
 Route::post('/contact/submit', 'MessagesController@submit');

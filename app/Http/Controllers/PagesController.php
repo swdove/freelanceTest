@@ -30,7 +30,7 @@ class PagesController extends Controller
         return view('blog/index');
     }
 
-    public function getVue(){
-        return view('vue/index');
+    public function getArticles(){
+        return view('articles/index');
     }    
 }
