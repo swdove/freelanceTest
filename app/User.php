@@ -37,6 +37,11 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }    
+
     public function publish($post)
     {
         $this->posts()->save($post);
@@ -46,4 +51,10 @@ class User extends Authenticatable
     {
         $this->comments()->save($comment);
     }
+
+    public function reply($reply)
+    {
+        $this->replies()->save($reply);
+    }
+    
 }

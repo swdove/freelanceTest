@@ -21,6 +21,11 @@
     <link href="/css/app.css" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <style>
+      body { padding-bottom: 100px;}
+      .level { display: flex; align-items: center; }
+      .flex { flex: 1;}
+    </style>
   </head>
 
   <body>
@@ -35,19 +40,13 @@
 
     <div class="blog-header">
       <div class="container">
-        <h1 class="blog-title">SHIT</h1>
+        <h1 class="blog-title">FUCK</h1>
         <p class="lead blog-description">An example blog template built with Bootstrap.</p>
       </div>
     </div>
 
-    <div class="container">
-
-      <div class="row">
-        @yield('content')
-        @include('layouts.sidebar')
-      </div><!-- /.row -->
-
-    </div><!-- /.container -->
+    @yield('content')
+    {{-- @include('layouts.sidebar') --}}
     @include('layouts.footer')
   </body>
 </html>

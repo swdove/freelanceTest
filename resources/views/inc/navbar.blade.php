@@ -13,8 +13,8 @@
           <a class="nav-link" href="/about">About</a>
         </li>
         <li class="nav-item {{Request::is('contact') ? 'active' : ''}}">
-                <a class="nav-link" href="/contact">Contact</a>
-              </li>        
+            <a class="nav-link" href="/contact">Contact</a>
+        </li>        
         <li class="nav-item {{Request::is('messages') ? 'active' : ''}}">
           <a class="nav-link " href="/messages">Messages</a>
         </li>
@@ -26,12 +26,30 @@
           <div class="dropdown-menu" aria-labelledby="dropdown01">
             <a class="dropdown-item" href="/posts">View</a>
             <a class="dropdown-item" href="/posts/create">Create</a>
-            <a class="dropdown-item" href="#">Something else here</a>
           </div>
         </li>
-        <li class="nav-item {{Request::is('forum') ? 'active' : ''}}">
-          <a class="nav-link " href="/forum">Forum</a>
-        </li>               
+        <li class="nav-item dropdown {{Request::is('threads') ? 'active' : ''}}">
+          <a class="nav-link dropdown-toggle" href="" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Forum</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown03">
+            <a class="dropdown-item" href="/threads">All Threads</a>
+            @guest
+            @else
+            <a class="dropdown-item" href="/threads?by={{ auth()->user()->name }}">My Threads</a>
+            <a class="dropdown-item" href="/threads?popular=1">Popular Threads</a>
+            @endguest
+          </div>
+        </li>  
+        <li class="nav-item dropdown {{Request::is('threads/*') ? 'active' : ''}}">
+          <a class="nav-link dropdown-toggle" href="" id="dropdown02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Channels</a>
+          <div class="dropdown-menu" aria-labelledby="dropdown02">
+            @foreach ($channels as $channel)
+              <a class="dropdown-item" href="/threads/{{ $channel->slug }}">{{ $channel->name }}</a>
+            @endforeach
+          </div>
+        </li> 
+        <li class="nav-item {{Request::is('threads/create') ? 'active' : ''}}">
+            <a class="nav-link " href="/threads/create">New Thread</a>
+        </li>                             
       </ul>
       <!-- Right Side Of Navbar -->
       <ul class="navbar-nav ml-auto">
