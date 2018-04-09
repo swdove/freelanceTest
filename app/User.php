@@ -56,5 +56,12 @@ class User extends Authenticatable
     {
         $this->replies()->save($reply);
     }
-    
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
+    public function threads()
+    {
+        return $this->hasMany(Thread::class)->latest();
+    }
 }
