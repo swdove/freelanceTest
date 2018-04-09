@@ -73,7 +73,8 @@ class ThreadsController extends Controller
             'body' => request('body')
         ]);
 
-        return redirect($thread->path());
+        return redirect($thread->path())
+            ->with('flash', 'Your thread has been published.');
     }
 
     /**
@@ -125,6 +126,7 @@ class ThreadsController extends Controller
 
         $thread->delete();
 
-        return redirect('/threads');
+        return redirect('/threads')
+            ->with('flash', 'Your thread has been deleted.');
     }
 }

@@ -28,25 +28,21 @@
     </style>
   </head>
 
-  <body>
-
-    @include('inc.navbar')
-
-    @if ($flash = session('message'))
-    <div class="alert alert-success" role="alert">
-      {{ $flash }}
+  <body id="">
+    <div id="app">
+        @include('inc.navbar')
+        <div class="blog-header">
+          <div class="container">
+            <h1 class="blog-title">FUCK</h1>
+            <p class="lead blog-description">An example blog template built with Bootstrap.</p>
+          </div>
+        </div>
+    
+        @yield('content')
+    
+        <flash message="{{ session('flash') }}"></flash>
+        {{-- <flash message="Temporary"></flash> --}}
+        @include('layouts.footer')
     </div>
-    @endif
-
-    <div class="blog-header">
-      <div class="container">
-        <h1 class="blog-title">FUCK</h1>
-        <p class="lead blog-description">An example blog template built with Bootstrap.</p>
-      </div>
-    </div>
-
-    @yield('content')
-    {{-- @include('layouts.sidebar') --}}
-    @include('layouts.footer')
   </body>
 </html>

@@ -4,6 +4,7 @@ namespace FreelanceTest\Http\Controllers;
 
 use Illuminate\Http\Request;
 use FreelanceTest\User;
+use FreelanceTest\Activity;
 
 class ProfilesController extends Controller
 {
@@ -11,7 +12,7 @@ class ProfilesController extends Controller
     {
         return view('profiles.show', [
             'profileUser' => $user,
-            'threads' => $user->threads()->paginate(20)
+            'activities' => Activity::feed($user)
         ]);
     }
 }

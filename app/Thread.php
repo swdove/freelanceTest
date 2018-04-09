@@ -2,8 +2,12 @@
 
 namespace FreelanceTest;
 
+use Freelance\Activity;
+
 class Thread extends Model
 {
+    use RecordsActivity;
+
     protected $with = ['creator', 'channel'];
 
     protected static function boot() 
@@ -15,7 +19,7 @@ class Thread extends Model
         });
 
         static::deleting(function ($thread) {
-            $thread->replies()->delete();
+            $thread->replies->each->delete();
         });
     }
 

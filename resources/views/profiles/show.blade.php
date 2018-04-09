@@ -2,33 +2,22 @@
 
 @section('content')
 <div class="container">
-    <div class="col-md-8 offset-md-2">
+    <div class="col-md-10 offset-md-1">
         <div class="page-header">
                 <h1>
                     {{ $profileUser->name }}
                     <small>Since {{ $profileUser->created_at->diffForHumans() }}</small>
                 </h1>
             </div>
-            @foreach($threads as $thread)
-            <div class="card border-primary mb-3">
-                <div class="card-header">
-                    <div class="level">
-                        <span class="flex">
-                            <h4 class="card-title">
-                                <a href="{{ $thread->path() }}">{{ $thread->title }}</a>
-                            </h4>                            
-                        </span>
-                        <span>
-                            {{ $thread->created_at->diffForHumans() }}
-                        </span>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">{{ $thread->body }}</p>
-                </div>
-            </div>   
+            @foreach ($activities as $date => $activity)
+                <h3 class="page-header">{{ $date }}</h3>
+                @foreach ($activity as $record)
+                    @isset($record->subject)
+                        @include ("profiles.activities.{$record->type}",['activity' => $record])
+                    @endif
+                @endforeach
             @endforeach
-            {{ $threads->links() }}
+            {{-- {{ $threads->links() }} --}}
     </div>
 </div>
 @endsection
