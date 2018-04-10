@@ -32,7 +32,7 @@
             hide() {
                 setTimeout(() => {
                     this.show = false;
-                }, 30000);
+                }, 3000);
             }
         }
     };

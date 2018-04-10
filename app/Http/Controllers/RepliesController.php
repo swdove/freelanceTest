@@ -3,6 +3,7 @@
 namespace FreelanceTest\Http\Controllers;
 
 use FreelanceTest\Thread;
+use FreelanceTest\Reply;
 use Illuminate\Http\Request;
 
 class RepliesController extends Controller
@@ -23,5 +24,20 @@ class RepliesController extends Controller
 
         return back()
             ->with('flash', 'Your reply has been posted.');
+    }
+
+    public function destroy(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+        $reply->delete();
+        if(request()->expectsJson()){
+            return response(['status' => 'Reply deleted.']);
+        }
+        return back();
+    }
+
+    public function update(Reply $reply)
+    {
+        $reply->update(['body' => request('body')]);
     }
 }

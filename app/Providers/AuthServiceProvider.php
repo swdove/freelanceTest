@@ -14,6 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'FreelanceTest\Thread' => 'FreelanceTest\Policies\ThreadPolicy',
+        'FreelanceTest\Reply' => 'FreelanceTest\Policies\ReplyPolicy',
     ];
 
     /**
