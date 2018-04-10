@@ -7,7 +7,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script>window.Laravel = { scrftToken: '{{ csrf_token() }}'}</script>
+    <script>window.App = {!! json_encode([
+      'csrfToken' => csrf_token(),
+      'user' => Auth::user(),
+      'signedIn' => Auth::check()
+    ]) !!};
+    </script>
     <link rel="icon" href="../../favicon.ico">
 
     <title>Blog Template for Bootstrap</title>
