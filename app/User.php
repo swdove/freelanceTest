@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'email'
     ];
 
     public function posts()
@@ -37,6 +37,11 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }    
+
     public function publish($post)
     {
         $this->posts()->save($post);
@@ -45,5 +50,36 @@ class User extends Authenticatable
     public function comment($comment)
     {
         $this->comments()->save($comment);
+    }
+
+    public function reply($reply)
+    {
+        $this->replies()->save($reply);
+    }
+    public function getRouteKeyName()
+    {
+        return 'name';
+    }
+    public function threads()
+    {
+        return $this->hasMany(Thread::class)->latest();
+    }
+
+    public function activity()
+    {
+        return $this->hasMany(Activity::class);
+    }
+
+    public function read($thread)
+    {
+        cache()->forever(
+            $this->visitedThreadCacheKey($thread),
+            \Carbon\Carbon::now()
+        );
+    }
+
+    public function visitedThreadCacheKey($thread)
+    {
+        return sprintf("users.%s.visits.%s", $this->id, $thread->id);
     }
 }
