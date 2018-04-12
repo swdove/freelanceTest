@@ -2,7 +2,8 @@
 
 namespace FreelanceTest;
 
-use Freelance\Activity;
+use FreelanceTest\Activity;
+use FreelanceTest\User;
 use FreelanceTest\Notifications\ThreadWasUpdated;
 
 class Thread extends Model
@@ -56,19 +57,8 @@ class Thread extends Model
         $reply = $this->replies()->create($reply);
 
         //prepare notifications for all subscribers
-        $this->subscriptions
-            ->filter(function ($sub) use ($reply) {
-                return $sub->user_id != $reply->user_id;
-            })
-            ->each->notify($reply);
-
-        // //notify subscribers
-        // foreach ($this->subscriptions as $subscription) {
-        //     // don't notify user who left reply
-        //     if ($subscription->user_id != $reply->user_id) {
-        //         $subscription->user->notify(new ThreadWasUpdated($this, $reply));
-        //     }
-        // }
+        $this->notifySubscribers($reply);
+       // event(new ThreadHasNewReply($this, $reply));
 
         return $reply;
     }
@@ -102,5 +92,20 @@ class Thread extends Model
         return $this->subscriptions()
             ->where('user_id', auth()->id())
             ->exists();
+    }
+
+    public function notifySubscribers($reply)
+    {
+        $this->subscriptions
+            ->where('user_id', '!=', $reply->user_id)
+            ->each
+            ->notify($reply);
+    }
+
+    public function hasUpdatesFor(User $user)
+    {
+        $key = $user->visitedThreadCacheKey($this);
+
+        return $this->updated_at > cache($key);
     }
 }

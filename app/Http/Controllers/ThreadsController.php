@@ -7,6 +7,7 @@ use FreelanceTest\Thread;
 use FreelanceTest\Channel;
 use FreelanceTest\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ThreadsController extends Controller
 {
@@ -85,6 +86,11 @@ class ThreadsController extends Controller
      */
     public function show($channelId, Thread $thread)
     {
+        //record that user viewed thread
+        if (auth()->check()) {
+            auth()->user()->read($thread);
+        }
+
         return view('threads.show', compact('thread'));
     }
 
