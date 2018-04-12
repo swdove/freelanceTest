@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-8">
             <div class="row">
-                <div class="card mb-3">
+                <div class="card mb-3" style="width: 100%;">
                     <div class="card-header">
                         <div class="level">
                             <span class="flex">
@@ -27,14 +27,8 @@
                 </div>  
             </div>
             <div class="row">
-                <div class="col-md-10 offset-md-1">  
-                    
-                    <replies :data="{{ $thread->replies }}" 
-                        @removed="repliesCount--"
-                        @added="repliesCount++"></replies>
-                    
-                    {{ $replies->links() }}
-
+                <div class="col-md-10 offset-md-1">                      
+                    <replies @removed="repliesCount--" @added="repliesCount++"></replies>
                 </div> 
             </div>
         </div>  
