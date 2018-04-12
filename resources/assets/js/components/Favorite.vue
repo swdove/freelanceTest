@@ -1,7 +1,7 @@
 <template>
-    <button type="submit" :class="classes" @click="toggle">
+    <button type="submit" class="btn btn-sm btn-default" @click="toggle">
         <!-- <span class="fas fa-heart"></span>  -->
-        <span class="fas fa-heart"></span> 
+        <i :class="classes"></i> 
         <span v-text="count"></span>
     </button>
 </template>
@@ -17,7 +17,8 @@ export default {
     },
     computed: {
         classes() {
-            return ['btn', 'btn-sm', this.isFavorited ? 'btn-primary' : 'btn-default'];
+            //return ['btn', 'btn-sm', this.isFavorited ? 'btn-primary' : 'btn-default'];
+            return ['fa', this.isFavorited ? 'fa-heart' : 'fa-heart-o'];
         },
         endpoint() {
             return '/replies/' + this.reply.id + '/favorites';
