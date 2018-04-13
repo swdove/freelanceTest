@@ -6,6 +6,7 @@ use FreelanceTest\Filters\ThreadFilters;
 use FreelanceTest\Thread;
 use FreelanceTest\Channel;
 use FreelanceTest\User;
+use FreelanceTest\Rules\SpamFree;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -61,12 +62,13 @@ class ThreadsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {    
         $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
+            'title' => ['required', new SpamFree],
+            'body' => ['required', new SpamFree],
             'channel_id' => 'required|exists:channels,id'
         ]);
+        
         $thread = Thread::create([
             'user_id' => auth()->id(),
             'channel_id' => request('channel_id'),

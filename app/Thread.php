@@ -102,7 +102,7 @@ class Thread extends Model
             ->notify($reply);
     }
 
-    public function hasUpdatesFor(User $user)
+    public function hasUpdatesFor(User $user = null)
     {
         $key = $user->visitedThreadCacheKey($this);
 

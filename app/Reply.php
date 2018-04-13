@@ -2,6 +2,8 @@
 
 namespace FreelanceTest;
 
+use Carbon\Carbon;
+
 class Reply extends Model
 {
     use Favoritable, RecordsActivity;
@@ -34,5 +36,10 @@ class Reply extends Model
     public function path()
     {
         return $this->thread->path() . "#reply-{$this->id}";
+    }
+
+    public function wasJustPublished()
+    {
+        return $this->created_at->gt(Carbon::now()->subMinute());
     }
 }

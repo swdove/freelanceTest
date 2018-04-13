@@ -4,6 +4,7 @@ namespace FreelanceTest\Http\Controllers;
 
 use FreelanceTest\Thread;
 use FreelanceTest\Reply;
+use FreelanceTest\Rules\SpamFree;
 use Illuminate\Http\Request;
 
 class RepliesController extends Controller
@@ -19,13 +20,23 @@ class RepliesController extends Controller
 
     public function store($channelId, Thread $thread)
     {
-        $this->validate(request(), [
-            'body' => 'required'
-        ]);
-        $reply = $thread->addReply([
-            'body' => request('body'),
-            'user_id' => auth()->id()
-        ]);
+        try {
+            //check reply against rules in Policies\ReplyPolicy
+            if (\Gate::denies('create', new Reply)) {
+                return response(
+                    'Calm down, fucker.', 429
+                );
+            }
+            //check against validation rules
+            $this->validate(request(), ['body' => ['required', new SpamFree]]);
+            //create reply    
+            $reply = $thread->addReply([
+                'body' => request('body'),
+                'user_id' => auth()->id()
+            ]);
+        } catch (\Exception $e) {
+            return response('Sorry, your reply could not be saved at this time.', 422);
+        }
 
         if (request()->expectsJson()) {
             return $reply->load('owner');
@@ -47,6 +58,16 @@ class RepliesController extends Controller
 
     public function update(Reply $reply)
     {
-        $reply->update(['body' => request('body')]);
+        $this->authorize('update', $reply);
+
+        try {
+            $this->validate(request(), [
+                'body' => ['required', new SpamFree]
+            ]);
+    
+            $reply->update(['body' => request('body')]);
+        } catch (\Exception $e) {
+            return response('Sorry, your reply could not be saved at this time.', 422);
+        }
     }
 }
