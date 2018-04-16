@@ -1,5 +1,7 @@
 @extends('layouts.master')
-
+@section('header')
+    <link rel="stylesheet" href="/css/vendor/jquery.atwho.css">
+@endsection
 @section('content')
 <thread-view :initial-replies-count="{{ $thread->replies_count }}" inline-template>
 <div class="container">
@@ -9,8 +11,9 @@
                 <div class="card mb-3" style="width: 100%;">
                     <div class="card-header">
                         <div class="level">
-                            <span class="flex">
-                                <h4 class="card-title">{{ $thread->title }}</h4>
+                            <img src="/storage/{{ $thread->creator->avatar() }}" width="25" height="25" class="mr-1">
+                            <span class="flex">                                                              
+                                <h3 class="card-title"><a href="{{ route('profile', $thread->creator) }}">{{ $thread->creator->name }}</a> posted: {{ $thread->title }}</h3>
                             </span>
                             @can ('update', $thread)
                             <form action="{{ $thread->path() }}" method="POST">

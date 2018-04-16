@@ -4,8 +4,10 @@ namespace FreelanceTest\Http\Controllers;
 
 use FreelanceTest\Thread;
 use FreelanceTest\Reply;
+use FreelanceTest\User;
 use FreelanceTest\Rules\SpamFree;
 use Illuminate\Http\Request;
+use FreelanceTest\Notifications\YouWereMentioned;
 
 class RepliesController extends Controller
 {
@@ -41,9 +43,6 @@ class RepliesController extends Controller
         if (request()->expectsJson()) {
             return $reply->load('owner');
         }
-
-        return back()
-            ->with('flash', 'Your reply has been posted.');
     }
 
     public function destroy(Reply $reply)

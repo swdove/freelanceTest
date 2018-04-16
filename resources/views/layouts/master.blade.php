@@ -36,6 +36,7 @@
       .flex { flex: 1;}
       [v-cloak] {display: none;}
     </style>
+    @yield('header')
   </head>
 
   <body id="">
@@ -43,7 +44,7 @@
         @include('inc.navbar')
         <div class="blog-header">
           <div class="container">
-            <h1 class="blog-title">FUCK</h1>
+            <h1 class="blog-title">BLOG</h1>
             <p class="lead blog-description">An example blog template built with Bootstrap.</p>
           </div>
         </div>

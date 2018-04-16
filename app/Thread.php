@@ -4,7 +4,7 @@ namespace FreelanceTest;
 
 use FreelanceTest\Activity;
 use FreelanceTest\User;
-use FreelanceTest\Notifications\ThreadWasUpdated;
+use FreelanceTest\Events\ThreadReceivedNewReply;
 
 class Thread extends Model
 {
@@ -56,9 +56,7 @@ class Thread extends Model
     {
         $reply = $this->replies()->create($reply);
 
-        //prepare notifications for all subscribers
-        $this->notifySubscribers($reply);
-       // event(new ThreadHasNewReply($this, $reply));
+        event(new ThreadReceivedNewReply($reply));
 
         return $reply;
     }
@@ -92,14 +90,6 @@ class Thread extends Model
         return $this->subscriptions()
             ->where('user_id', auth()->id())
             ->exists();
-    }
-
-    public function notifySubscribers($reply)
-    {
-        $this->subscriptions
-            ->where('user_id', '!=', $reply->user_id)
-            ->each
-            ->notify($reply);
     }
 
     public function hasUpdatesFor(User $user = null)
