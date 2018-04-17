@@ -19,6 +19,8 @@ class UserAvatarController extends Controller
             'avatar_path' => $avatar_path
         ]);
 
+        return response([], 204);
+
         return back();
     }
 }

@@ -3,7 +3,7 @@
     <div class="card-header">
         <div class="level">   
             <div class="flex">
-                <h4 class="flex">
+                <h4>
                     <a href="{{ $thread->path() }}">
                         @if (auth()->check() && $thread->hasUpdatesFor(auth()->user()))
                             <strong>{{ $thread->title }} <span class="fa fa-commenting"></span></strong>

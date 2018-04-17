@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="col-sm-8">
+<div class="container">
     <h2>Create a New Thread</h2>
     <div>
         <form method="POST" action="/threads">

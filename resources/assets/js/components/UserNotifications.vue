@@ -6,7 +6,10 @@
         <div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarNotifications">
             <div v-for="notification in notifications">
                 <a class="dropdown-item" :href="notification.data.link" v-text="notification.data.message" @click="markAsRead(notification)"></a>
-            </div>                
+            </div>   
+            <div>
+                <a class="dropdown-item" href="#" @click="markAllRead">Mark All Read</a>
+            </div>             
         </div>
     </li>   
 </template>
@@ -23,6 +26,10 @@
         methods: {
             markAsRead(notification) {
                 axios.delete('/profiles/' + window.App.user.name + '/notifications/' + notification.id);
+            },
+            markAllRead(notification) {
+                axios.delete('/profiles/' + window.App.user.name + '/notifications/')
+                    .then(this.notifications = []);
             }
         }
     }

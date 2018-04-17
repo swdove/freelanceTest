@@ -56,8 +56,9 @@ Route::delete('/threads/{channel}/{thread}/subscriptions', 'ThreadSubscriptionsC
 //USER
 Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile');
 Route::get('/profiles/{user}/notifications', 'UserNotificationsController@index');
+Route::delete('/profiles/{user}/notifications', 'UserNotificationsController@destroyall');
 Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotificationsController@destroy');
-Route::post('users/{user}/avatar', 'Api\UserAvatarController@store')->middleware('auth')->name('avatar');
+Route::post('/api/users/{user}/avatar', 'Api\UserAvatarController@store')->middleware('auth')->name('avatar');
 //Route::get('api/users', 'Api\UsersController@index');
 
 Auth::routes();

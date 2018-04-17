@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="col-sm-8">
+    <div class="container">
         <h1>Register</h1>
         <form method="POST" action="{{ url('register')}}">
             {{ csrf_field() }}

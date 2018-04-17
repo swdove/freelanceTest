@@ -68,7 +68,8 @@ export default {
             flash('Updated!');
         },
         destroy() {
-            axios.delete('/replies/' + this.data.id);
+            axios.delete('/replies/' + this.data.id)
+                .then(() => flash('Comment deleted!'));
             this.$emit('deleted', this.data.id);
         }
     }
