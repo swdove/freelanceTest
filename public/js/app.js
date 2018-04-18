@@ -64063,8 +64063,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         flash: function flash(data) {
-            this.body = data.message;
-            this.level = data.level;
+            if (data.message) {
+                this.body = data.message;
+                this.level = data.level;
+            } else {
+                this.body = data;
+            }
             this.show = true;
 
             this.hide();
@@ -64074,7 +64078,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             setTimeout(function () {
                 _this2.show = false;
-            }, 3000);
+            }, 5000);
         }
     }
 });

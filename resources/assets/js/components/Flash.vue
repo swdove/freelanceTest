@@ -27,8 +27,12 @@
         },
         methods: {
             flash(data) {
-                this.body = data.message;
-                this.level = data.level;
+                if(data.message){
+                    this.body = data.message;
+                    this.level = data.level;
+                } else {
+                    this.body = data;
+                }
                 this.show = true;
 
                 this.hide();
@@ -36,7 +40,7 @@
             hide() {
                 setTimeout(() => {
                     this.show = false;
-                }, 3000);
+                }, 5000);
             }
         }
     };

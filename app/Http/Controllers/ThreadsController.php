@@ -6,9 +6,9 @@ use FreelanceTest\Filters\ThreadFilters;
 use FreelanceTest\Thread;
 use FreelanceTest\Channel;
 use FreelanceTest\User;
+use FreelanceTest\Trending;
 use FreelanceTest\Rules\SpamFree;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 
 class ThreadsController extends Controller
@@ -22,17 +22,18 @@ class ThreadsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel, ThreadFilters $filters)
+    public function index(Channel $channel, ThreadFilters $filters, Trending $trending)
     {
         $threads = $this->getThreads($channel, $filters);
 
         if (request()->wantsJson()) {
             return $threads;
-        }
-
-        $trending = array_map('json_decode', Redis::zrevrange('trending_threads', 0, 4));
+        }        
         
-        return view('threads.index', compact('threads', 'trending'));
+        return view('threads.index', [
+            'threads' => $threads,
+            'trending' => $trending->get()
+        ]);
     }
 
     protected function getThreads(Channel $channel, ThreadFilters $filters)
@@ -87,17 +88,16 @@ class ThreadsController extends Controller
      * @param  \FreelanceTest\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($channelId, Thread $thread)
+    public function show($channelId, Thread $thread, Trending $trending)
     {
         //record that user viewed thread
         if (auth()->check()) {
             auth()->user()->read($thread);
         }
-        //update trending thread set
-        Redis::zincrby('trending_threads', 1, json_encode([
-            'title' => $thread->title,
-            'path' => $thread->path()
-        ]));
+
+        $trending->push($thread);
+
+        $thread->visits()->record();
 
         return view('threads.show', compact('thread'));
     }

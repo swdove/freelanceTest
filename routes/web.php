@@ -37,11 +37,11 @@ Route::get('/tasks/{task}', 'TasksController@show');
 // FORUM
 // THREADS
 Route::get('/threads', 'ThreadsController@index');
-Route::get('/threads/create', 'ThreadsController@create');
+Route::get('/threads/create', 'ThreadsController@create')->middleware('must-be-confirmed');
 Route::get('/threads/{channel}', 'ThreadsController@index');
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
 Route::delete('/threads/{channel}/{thread}', 'ThreadsController@destroy');
-Route::post('/threads', 'ThreadsController@store');
+Route::post('/threads', 'ThreadsController@store')->middleware('must-be-confirmed');
 //REPLIES
 Route::get('/threads/{channel}/{thread}/replies', 'RepliesController@index');
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store');
@@ -59,7 +59,7 @@ Route::get('/profiles/{user}/notifications', 'UserNotificationsController@index'
 Route::delete('/profiles/{user}/notifications', 'UserNotificationsController@destroyall');
 Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotificationsController@destroy');
 Route::post('/api/users/{user}/avatar', 'Api\UserAvatarController@store')->middleware('auth')->name('avatar');
-//Route::get('api/users', 'Api\UsersController@index');
+Route::get('/register/confirm', 'Auth\RegisterConfirmationController@index');
 
 Auth::routes();
 

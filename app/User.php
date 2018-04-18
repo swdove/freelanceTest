@@ -14,9 +14,11 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password', 'avatar_path'
-    ];
+    protected $guarded = [];
+
+    // protected $fillable = [
+    //     'name', 'email', 'password', 'avatar_path'
+    // ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -25,6 +27,10 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token', 'email'
+    ];
+
+    protected $casts = [
+        'confirmed' => 'boolean'
     ];
 
     public function posts()
@@ -91,5 +97,12 @@ class User extends Authenticatable
     public function getAvatarPathAttribute($avatar)
     {
         return asset($avatar ? '/storage/' . $avatar : '/storage/avatars/default.jpg');
+    }
+
+    public function confirm()
+    {
+        $this->confirmed = true;
+        $this->confirmation_token = null;
+        $this->save();
     }
 }

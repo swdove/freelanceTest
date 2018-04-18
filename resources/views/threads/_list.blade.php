@@ -22,10 +22,11 @@
         </div>                       
     </div>                
     <div class="card-body">           
-        <div class="card-body">
-            <p class="card-text">{{ $thread->body }}</p>
-        </div>    
-    </div>                                
+        <p class="card-text">{{ $thread->body }}</p>
+    </div> 
+    <div class="card-footer">
+        {{ $thread->visits()->count() }} Visits
+    </div>                               
 </div>
 @empty
     <p>There are no relevant results</p>
