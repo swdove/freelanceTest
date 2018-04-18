@@ -18,18 +18,22 @@ class Thread extends Model
     {
         parent::boot();
 
-        static::addGlobalScope('replyCount', function ($builder) {
-            $builder->withCount('replies');
-        });
+        // static::addGlobalScope('replyCount', function ($builder) {
+        //     $builder->withCount('replies');
+        // });
 
         static::deleting(function ($thread) {
             $thread->replies->each->delete();
+        });
+
+        static::created(function ($thread) {
+            $thread->update(['slug' => $thread->title]);
         });
     }
 
     public function path() 
     {
-        return "/threads/{$this->channel->slug}/{$this->id}";  
+        return "/threads/{$this->channel->slug}/{$this->slug}";  
     }
 
     public function replies()
@@ -104,4 +108,26 @@ class Thread extends Model
     {
         return new Visits($this);
     }    
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function setSlugAttribute($value)
+    {
+        $slug = str_slug($value);
+
+        if (static::whereSlug($slug)->exists()) {
+            $slug = "{$slug}-" . $this->id;
+        }
+
+        $this->attributes['slug'] = $slug;
+    }
+
+    public function markBestReply(Reply $reply)
+    {
+        $this->update(['best_reply_id' => $reply->id]);
+    }
+
 }

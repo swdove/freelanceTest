@@ -1,5 +1,5 @@
 <template>
-    <div :id="'reply-'+id" class="card mb-2">
+    <div :id="'reply-'+id" class="card mb-2" :class="highlightBest">
         <div class="card-header">
             <div class="level">
                 <h5 class="flex">
@@ -24,9 +24,12 @@
             <div v-else v-html="body">
             </div>
         </div>
-        <div class="card-footer level" v-if="canUpdate">
-            <button class="btn btn-secondary btn-sm mr-1" @click="editing = true">Edit</button>
-            <button type="submit" class="btn btn-danger btn-sm" @click="destroy">Delete</button>
+        <div class="card-footer level">
+            <div v-if="authorize('updateReply', reply)">
+                <button class="btn btn-secondary btn-sm mr-1" @click="editing = true">Edit</button>
+                <button type="submit" class="btn btn-danger btn-sm" @click="destroy">Delete</button>
+            </div>
+            <button type="submit" class="btn btn-default btn-sm" style="margin-left: auto;" @click="markBestReply" v-show="! isBest">Best Reply?</button>
         </div>
     </div>
 </template>
@@ -41,19 +44,20 @@ export default {
         return {
             editing: false,
             id: this.data.id,
-            body: this.data.body
+            body: this.data.body,
+            reply: this.data,
+            thread: window.thread
         };
     },
     computed: {
         ago() {
             return moment(this.data.created_at).fromNow();
         },
-        signedIn() {
-            return window.App.signedIn;
+        highlightBest() {
+            return this.isBest ? 'bg-success text-white' : '';
         },
-        canUpdate() {
-            return this.authorize(user => this.data.user_id == user.id);
-            //return this.data.user_id == window.App.user.id;
+        isBest() {
+            return this.thread.best_reply_id == this.id;
         }
     },
     methods: {
@@ -71,6 +75,11 @@ export default {
             axios.delete('/replies/' + this.data.id)
                 .then(() => flash('Comment deleted!'));
             this.$emit('deleted', this.data.id);
+        },
+        markBestReply() {
+            axios.post('/replies/' + this.data.id + '/best');
+
+            this.thread.best_reply_id = this.id;
         }
     }
 }

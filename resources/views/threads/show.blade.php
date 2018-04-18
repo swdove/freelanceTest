@@ -1,6 +1,9 @@
 @extends('layouts.master')
 @section('header')
     <link rel="stylesheet" href="/css/vendor/jquery.atwho.css">
+    <script>
+        window.thread = <?= json_encode($thread); ?>
+    </script>
 @endsection
 @section('content')
 <thread-view :initial-replies-count="{{ $thread->replies_count }}" inline-template>
