@@ -120,9 +120,9 @@ class ThreadsController extends Controller
      * @param  \FreelanceTest\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Thread $thread)
+    public function update($channel, Thread $thread)
     {
-        //
+        
     }
 
     /**

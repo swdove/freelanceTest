@@ -22,6 +22,10 @@ class RepliesController extends Controller
 
     public function store($channelId, Thread $thread)
     {
+        if ($thread->locked) {
+            return response('Thread is locked.', 422);
+        }
+
         try {
             //check reply against rules in Policies\ReplyPolicy
             if (\Gate::denies('create', new Reply)) {
