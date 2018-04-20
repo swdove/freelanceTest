@@ -45,7 +45,6 @@ export default {
             editing: false,
             id: this.reply.id,
             body: this.reply.body,
-            reply: this.reply,
             thread: window.thread
         };
     },

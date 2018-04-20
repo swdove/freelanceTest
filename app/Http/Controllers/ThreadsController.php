@@ -8,6 +8,7 @@ use FreelanceTest\Channel;
 use FreelanceTest\User;
 use FreelanceTest\Trending;
 use FreelanceTest\Rules\SpamFree;
+use FreelanceTest\Rules\Recaptcha;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -63,12 +64,13 @@ class ThreadsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, SpamFree $spamfree, Recaptcha $recaptcha)
     {    
-        $this->validate($request, [
-            'title' => ['required', new SpamFree],
-            'body' => ['required', new SpamFree],
-            'channel_id' => 'required|exists:channels,id'
+        request()->validate([
+            'title' => ['required', $spamfree],
+            'body' => ['required', $spamfree],
+            'channel_id' => 'required|exists:channels,id',
+            'g-recaptcha-response' => ['required', $recaptcha]
         ]);
         
         $thread = Thread::create([
@@ -122,7 +124,14 @@ class ThreadsController extends Controller
      */
     public function update($channel, Thread $thread)
     {
-        
+        $this->authorize('update', $thread);
+
+        $thread->update(request()->validate([
+            'title' => ['required'],
+            'body' => ['required']
+        ]));
+
+        return $thread;               
     }
 
     /**
