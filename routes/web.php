@@ -34,9 +34,12 @@ Route::get('/messages', 'MessagesController@index');
 Route::get('/tasks', 'TasksController@index');
 Route::get('/tasks/{task}', 'TasksController@show');
 
+Route::view('/scan', 'scan');
+
 // FORUM
 // THREADS
 Route::get('/threads', 'ThreadsController@index');
+Route::get('/threads/search', 'SearchController@show');
 Route::get('/threads/create', 'ThreadsController@create')->middleware('must-be-confirmed');
 Route::get('/threads/{channel}', 'ThreadsController@index');
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');

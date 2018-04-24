@@ -1,5 +1,5 @@
 @forelse($threads as $thread)
-<div class="card mb-3">
+<div class="card mb-2">
     <div class="card-header">
         <div class="level">   
             <div class="flex">
@@ -22,7 +22,7 @@
         </div>                       
     </div>                
     <div class="card-body">           
-        <p class="card-text">{{ $thread->body }}</p>
+        <p class="card-text">{!! $thread->body !!}</p>
     </div> 
     <div class="card-footer">
         {{ $thread->visits()->count() }} Visits
