@@ -27,3 +27,8 @@ Route::post('article', 'ArticleController@store');
 Route::put('article', 'ArticleController@store');
 //Delete article
 Route::delete('article/{id}', 'ArticleController@destroy');
+
+//List users
+Route::get('users', 'Api\UsersController@index');
+//Route::post('users/{user}/avatar', 'Api\UserAvatarController@store');
+// Route::post('users/{user}/avatar', 'Api\UserAvatarController@store')->middleware('auth');

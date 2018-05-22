@@ -59,5 +59,7 @@ class Kernel extends HttpKernel
         'guest' => \FreelanceTest\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'must-be-confirmed' => \FreelanceTest\Http\Middleware\RedirectIfEmailNotConfirmed::class,
+        'admin' => \FreelanceTest\Http\Middleware\Administrator::class,
     ];
 }

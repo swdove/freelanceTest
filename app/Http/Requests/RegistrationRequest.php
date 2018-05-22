@@ -3,9 +3,10 @@
 namespace FreelanceTest\Http\Requests;
 
 use FreelanceTest\User;
-use FreelanceTest\Mail\Welcome;
+use FreelanceTest\Mail\PleaseConfirmYourEmail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 
 class RegistrationRequest extends FormRequest
 {
@@ -28,7 +29,7 @@ class RegistrationRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'password' => 'required|confirmed'   
         ];
     }
@@ -36,14 +37,23 @@ class RegistrationRequest extends FormRequest
     public function persist() 
     {
         //create and save user
-        $user = User::create(
-            $this->only(['name', 'email', 'password'])
-        );
+        // $user = User::create(
+        //     $this->only(['name', 'email', 'password'])
+        // );
+
+       // dd($this);
+
+        $user = User::forceCreate([
+            'name' => $this['name'],
+            'email' => $this['email'],
+            'password' => Hash::make($this['password']),
+            'confirmation_token' => str_limit(md5($this['email'] . str_random()), 25, '')
+        ]);        
         
         //sign user in
         auth()->login($user);
 
         //send welcome email
-        Mail::to($user)->send(new Welcome($user));        
+        Mail::to($user)->send(new PleaseConfirmYourEmail($user));        
     }
 }

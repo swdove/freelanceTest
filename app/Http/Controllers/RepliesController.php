@@ -4,7 +4,10 @@ namespace FreelanceTest\Http\Controllers;
 
 use FreelanceTest\Thread;
 use FreelanceTest\Reply;
+use FreelanceTest\User;
+use FreelanceTest\Rules\SpamFree;
 use Illuminate\Http\Request;
+use FreelanceTest\Notifications\YouWereMentioned;
 
 class RepliesController extends Controller
 {
@@ -19,20 +22,31 @@ class RepliesController extends Controller
 
     public function store($channelId, Thread $thread)
     {
-        $this->validate(request(), [
-            'body' => 'required'
-        ]);
-        $reply = $thread->addReply([
-            'body' => request('body'),
-            'user_id' => auth()->id()
-        ]);
+        if ($thread->locked) {
+            return response('Thread is locked.', 422);
+        }
+
+        try {
+            //check reply against rules in Policies\ReplyPolicy
+            if (\Gate::denies('create', new Reply)) {
+                return response(
+                    'Calm down.', 429
+                );
+            }
+            //check against validation rules
+            $this->validate(request(), ['body' => ['required', new SpamFree]]);
+            //create reply    
+            $reply = $thread->addReply([
+                'body' => request('body'),
+                'user_id' => auth()->id()
+            ]);
+        } catch (\Exception $e) {
+            return response('Spam detected!', 422);
+        }
 
         if (request()->expectsJson()) {
             return $reply->load('owner');
         }
-
-        return back()
-            ->with('flash', 'Your reply has been posted.');
     }
 
     public function destroy(Reply $reply)
@@ -45,8 +59,14 @@ class RepliesController extends Controller
         return back();
     }
 
-    public function update(Reply $reply)
+    public function update(Reply $reply, Spamfree $spamfree)
     {
+        $this->authorize('update', $reply);
+
+        request()->validate([
+            'body' => ['required', $spamfree]
+        ]);
+
         $reply->update(['body' => request('body')]);
     }
 }

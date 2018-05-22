@@ -14,9 +14,11 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $guarded = [];
+
+    // protected $fillable = [
+    //     'name', 'email', 'password', 'avatar_path'
+    // ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -25,6 +27,10 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token', 'email'
+    ];
+
+    protected $casts = [
+        'confirmed' => 'boolean'
     ];
 
     public function posts()
@@ -65,6 +71,11 @@ class User extends Authenticatable
         return $this->hasMany(Thread::class)->latest();
     }
 
+    public function lastReply()
+    {
+        return $this->hasOne(Reply::class)->latest();
+    }
+
     public function activity()
     {
         return $this->hasMany(Activity::class);
@@ -81,5 +92,22 @@ class User extends Authenticatable
     public function visitedThreadCacheKey($thread)
     {
         return sprintf("users.%s.visits.%s", $this->id, $thread->id);
+    }
+
+    public function getAvatarPathAttribute($avatar)
+    {
+        return asset($avatar ? '/storage/' . $avatar : '/storage/avatars/default.jpg');
+    }
+
+    public function confirm()
+    {
+        $this->confirmed = true;
+        $this->confirmation_token = null;
+        $this->save();
+    }
+
+    public function isAdmin()
+    {
+        return in_array($this->name, ['Billy']);
     }
 }

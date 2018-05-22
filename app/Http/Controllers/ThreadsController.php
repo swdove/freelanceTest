@@ -6,6 +6,9 @@ use FreelanceTest\Filters\ThreadFilters;
 use FreelanceTest\Thread;
 use FreelanceTest\Channel;
 use FreelanceTest\User;
+use FreelanceTest\Trending;
+use FreelanceTest\Rules\SpamFree;
+use FreelanceTest\Rules\Recaptcha;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -20,15 +23,18 @@ class ThreadsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel, ThreadFilters $filters)
+    public function index(Channel $channel, ThreadFilters $filters, Trending $trending)
     {
         $threads = $this->getThreads($channel, $filters);
 
         if (request()->wantsJson()) {
             return $threads;
-        }
+        }        
         
-        return view('threads.index', compact('threads'));
+        return view('threads.index', [
+            'threads' => $threads,
+            'trending' => $trending->get()
+        ]);
     }
 
     protected function getThreads(Channel $channel, ThreadFilters $filters)
@@ -39,9 +45,7 @@ class ThreadsController extends Controller
             $threads->where('channel_id', $channel->id);
         }
 
-       // dd($threads->toSql());
-
-        return $threads->get();
+        return $threads->paginate(10);
     }
 
     /**
@@ -60,13 +64,15 @@ class ThreadsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
-            'channel_id' => 'required|exists:channels,id'
+    public function store(Request $request, SpamFree $spamfree, Recaptcha $recaptcha)
+    {    
+        request()->validate([
+            'title' => ['required', $spamfree],
+            'body' => ['required', $spamfree],
+            'channel_id' => 'required|exists:channels,id',
+            'g-recaptcha-response' => ['required', $recaptcha]
         ]);
+        
         $thread = Thread::create([
             'user_id' => auth()->id(),
             'channel_id' => request('channel_id'),
@@ -84,12 +90,16 @@ class ThreadsController extends Controller
      * @param  \FreelanceTest\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($channelId, Thread $thread)
+    public function show($channelId, Thread $thread, Trending $trending)
     {
         //record that user viewed thread
         if (auth()->check()) {
             auth()->user()->read($thread);
         }
+
+        $trending->push($thread);
+
+        $thread->visits()->record();
 
         return view('threads.show', compact('thread'));
     }
@@ -112,9 +122,16 @@ class ThreadsController extends Controller
      * @param  \FreelanceTest\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Thread $thread)
+    public function update($channel, Thread $thread)
     {
-        //
+        $this->authorize('update', $thread);
+
+        $thread->update(request()->validate([
+            'title' => ['required'],
+            'body' => ['required']
+        ]));
+
+        return $thread;               
     }
 
     /**
