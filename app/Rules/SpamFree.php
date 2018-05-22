@@ -41,6 +41,6 @@ class SpamFree implements Rule
      */
     public function message()
     {
-        return 'This is spam, fucker.';
+        return 'This is spam!';
     }
 }

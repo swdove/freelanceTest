@@ -30,7 +30,7 @@ class RepliesController extends Controller
             //check reply against rules in Policies\ReplyPolicy
             if (\Gate::denies('create', new Reply)) {
                 return response(
-                    'Calm down, fucker.', 429
+                    'Calm down.', 429
                 );
             }
             //check against validation rules
